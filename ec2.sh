@@ -28,11 +28,13 @@ eksctl version
 
 #install kubectl
 #https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html
-curl -o kubectl.sha256 https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/kubectl.sha256
+curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.29.3/2024-04-19/bin/linux/amd64/kubectl
+sha256sum -c kubectl.sha256
+openssl sha1 -sha256 kubectl
 chmod +x ./kubectl
-sudo mv ./kubectl /usr/local/bin
-mkdir -p $HOME/bin && mv ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
-kubectl version --short --client
+mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH
+echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+kubectl version --client
 
 ----- Build cluster ---
 
